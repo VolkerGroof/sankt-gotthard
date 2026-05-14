@@ -1,0 +1,47 @@
+{
+  "site": {
+    "title": "Sankt Gotthard",
+    "subtitle": "Eine Ausstellung zu Ehren von Gotthard Günther"
+  },
+  "landing": {
+    "intro": "Zehn Bilder. Sechs Räume. Eine Hommage an den Denker des planetarischen Zeitalters.",
+    "enter": "Ausstellung betreten"
+  },
+  "ui": {
+    "next": "Weiter",
+    "prev": "Zurück",
+    "exitExhibition": "Ausstellung verlassen",
+    "german": "Deutsch",
+    "english": "English",
+    "missingImage": "Bilddatei fehlt",
+    "soundOn": "Ton einschalten",
+    "soundOff": "Ton ausschalten",
+    "wallTextLabel": "Wandtext",
+    "wallTextEyebrow": "Wandtext · Transkript",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "nationalGalleryView": "National Gallery View",
+    "rowView": "Reihenansicht"
+  },
+  "rooms": {
+    "eingang": "Eingang",
+    "r1": "Raum 1 — Männer",
+    "r2": "Raum 2 — Übergang",
+    "r3": "Raum 3 — New Frontiers",
+    "r4": "Raum 4 — Polykontexturalität",
+    "ausgang": "Ausgang",
+    "gallery": "Galerie"
+  },
+  "pictures": {
+    "georg": "Georg",
+    "stargazer": "Stargazer",
+    "homage": "Homage",
+    "sinGuantes": "Sin Guantes",
+    "agarrrando": "Agarrrando",
+    "banane": "Die Banane im Getriebe",
+    "offenbarung": "Die amerikanische Offenbarung",
+    "culture": "The Culture",
+    "ichOderDu": "Ich oder Du",
+    "proemial": "Proemial Decoder"
+  }
+}

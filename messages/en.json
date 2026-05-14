@@ -1,0 +1,47 @@
+{
+  "site": {
+    "title": "Sankt Gotthard",
+    "subtitle": "An Exhibition in Honor of Gotthard Günther"
+  },
+  "landing": {
+    "intro": "Ten pictures. Six rooms. An homage to the thinker of the planetary age.",
+    "enter": "Enter exhibition"
+  },
+  "ui": {
+    "next": "Next",
+    "prev": "Previous",
+    "exitExhibition": "Exit exhibition",
+    "german": "Deutsch",
+    "english": "English",
+    "missingImage": "Image file missing",
+    "soundOn": "Unmute",
+    "soundOff": "Mute",
+    "wallTextLabel": "Wall text",
+    "wallTextEyebrow": "Wall text · Transcript",
+    "play": "Play",
+    "pause": "Pause",
+    "nationalGalleryView": "National Gallery View",
+    "rowView": "Row View"
+  },
+  "rooms": {
+    "eingang": "Entrance",
+    "r1": "Room 1 — Men",
+    "r2": "Room 2 — Transition",
+    "r3": "Room 3 — New Frontiers",
+    "r4": "Room 4 — Polycontexturality",
+    "ausgang": "Exit",
+    "gallery": "Gallery"
+  },
+  "pictures": {
+    "georg": "Georg",
+    "stargazer": "Stargazer",
+    "homage": "Homage",
+    "sinGuantes": "Sin Guantes",
+    "agarrrando": "Agarrrando",
+    "banane": "The Banana in the Gears",
+    "offenbarung": "The American Revelation",
+    "culture": "The Culture",
+    "ichOderDu": "Me or You",
+    "proemial": "Proemial Decoder"
+  }
+}
