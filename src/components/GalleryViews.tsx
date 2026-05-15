@@ -2,7 +2,6 @@
 
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
-import WallText from './WallText';
 
 export type GalleryPicture = {
   id: string;
@@ -46,8 +45,8 @@ export default function GalleryViews({
 
       <RowView pictures={pictures} />
 
-      <nav className="relative z-10 flex items-center gap-6 border-t border-white/10 bg-[#3a1115]/70 px-6 py-5 font-body text-base text-[#f1e2b8] backdrop-blur-sm sm:px-12">
-        <div className="flex-1 min-w-0">
+      <nav className="relative z-10 flex items-center justify-between gap-4 border-t border-white/10 bg-[#3a1115]/70 px-6 py-5 font-body text-base text-[#f1e2b8] backdrop-blur-sm sm:px-12">
+        <div className="flex-1">
           <Link
             href={`/exhibition/${prevSlug}`}
             className="group inline-flex flex-col items-start hover:text-white"
@@ -58,8 +57,7 @@ export default function GalleryViews({
             <span className="font-display text-lg italic">{t(prevNameKey)}</span>
           </Link>
         </div>
-        <WallText textClassName="whitespace-nowrap text-center font-display text-[15px] italic leading-tight text-[#f1e2b8]/85" />
-        <div className="flex-1 min-w-0 text-right">
+        <div className="flex-1 text-right">
           <Link
             href="/"
             className="text-xs uppercase tracking-[0.25em] text-[#f1e2b8]/80 hover:text-white"

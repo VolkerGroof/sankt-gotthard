@@ -6,7 +6,6 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Link } from '@/i18n/routing';
 import LanguageToggle from '@/components/LanguageToggle';
-import BackgroundAudio from '@/components/BackgroundAudio';
 import '../globals.css';
 
 const display = Cormorant_Garamond({
@@ -66,7 +65,6 @@ export default async function LocaleLayout({
             </footer>
           </div>
           <div className="floor-parquet" aria-hidden />
-          <BackgroundAudio />
         </NextIntlClientProvider>
       </body>
     </html>
