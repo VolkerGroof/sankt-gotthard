@@ -152,17 +152,17 @@ function PictureLightbox({
           }}
         >
           <div
-            className="relative flex items-center justify-center bg-gallery-mat"
-            style={{ padding: '28px' }}
+            className="relative flex aspect-[16/9] items-center justify-center bg-gallery-mat"
+            style={{ padding: '28px', width: 'min(80vw, 1200px)' }}
           >
             {exists ? (
               <img
                 src={`/pictures/${file}`}
                 alt={title}
-                className="block max-h-[70vh] max-w-[80vw] object-contain"
+                className="block h-full w-full object-contain"
               />
             ) : (
-              <div className="flex aspect-[4/3] w-[60vw] items-center justify-center bg-neutral-300 text-neutral-700">
+              <div className="flex h-full w-full items-center justify-center bg-neutral-300 text-neutral-700">
                 {file}
               </div>
             )}
