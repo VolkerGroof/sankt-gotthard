@@ -37,7 +37,7 @@ export default function RoomLayout({ stop }: Props) {
           className={
             isSingle
               ? 'flex w-full items-center justify-center'
-              : 'flex w-full flex-wrap items-center justify-center gap-6 sm:gap-16 lg:gap-24'
+              : 'pair-row flex w-full flex-nowrap items-center justify-center gap-3 sm:gap-12 lg:gap-20'
           }
         >
           {stop.pictures.map((p) => (

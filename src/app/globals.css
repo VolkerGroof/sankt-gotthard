@@ -87,11 +87,52 @@
   body.force-landscape .pf-single img {
     max-height: 88vw !important;
   }
-  body.force-landscape .pf-pair {
-    max-width: 42vh !important;
+  /* In rotated mobile, a CSS flex-row maps to a VISUALLY vertical stack
+     (since CSS x-axis becomes screen y-axis after the 90° rotation).
+     To keep the two pair pictures side-by-side on the screen, the row
+     needs to be CSS flex-col here. Sizes are tightened so two figures
+     fit within the layout-root's CSS height (= 100vw on the short axis
+     of the device). */
+  /* Without this, the room main's min-h-[calc(100vh-4rem)] = 780 CSS doesn't
+     fit in the rotated layout-root height (= 100vw = 390 on mobile), forcing
+     a horizontal scroll. */
+  body.force-landscape main {
+    min-height: 0 !important;
   }
-  body.force-landscape .pf-pair img {
-    max-height: 80vw !important;
+  body.force-landscape .room-header {
+    padding-top: 0.5rem;
+    padding-bottom: 0.25rem;
+  }
+  body.force-landscape .room-header h1 {
+    font-size: 1.25rem;
+    letter-spacing: 0.18em;
+  }
+  body.force-landscape .room-header > div {
+    margin-top: 0.4rem;
+    width: 3.5rem;
+  }
+  /* Pair pictures in rotated mode: switch CSS flex direction to column so the
+     two figures stay SIDE-BY-SIDE in the visible (rotated) view. Sizes are
+     deliberately small here so two figures + spacing fit within the rotated
+     CSS height. */
+  body.force-landscape .pair-row {
+    flex-direction: column !important;
+    gap: 0.3rem !important;
+  }
+  body.force-landscape .pf-pair {
+    max-width: 17vh !important;
+  }
+  body.force-landscape .pf-pair > div {
+    padding: 6px !important;
+  }
+  body.force-landscape .pf-pair > div > div {
+    padding: 10px !important;
+  }
+  body.force-landscape .pf-pair figcaption {
+    font-size: 0.7rem;
+    margin-top: 0.2rem;
+    line-height: 1.15;
+    max-width: 16rem;
   }
   /* The lightbox is rendered via a portal to <body>, so it sits OUTSIDE the
      rotated .layout-root. Rotate it directly so the enlarged picture also
