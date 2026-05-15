@@ -24,11 +24,11 @@ export default function PictureFrame({ titleKey, file, layout = 'single' }: Prop
 
   const figureWidth =
     layout === 'pair'
-      ? 'w-full max-w-[min(600px,40vw)]'
-      : 'w-full max-w-[min(760px,60vw)]';
+      ? 'w-full max-w-[min(720px,44vw)]'
+      : 'w-full max-w-[min(960px,72vw)]';
 
   const imgMaxH =
-    layout === 'pair' ? 'max-h-[50vh]' : 'max-h-[60vh]';
+    layout === 'pair' ? 'max-h-[62vh]' : 'max-h-[72vh]';
 
   return (
     <figure className={`flex flex-col items-center ${figureWidth}`}>

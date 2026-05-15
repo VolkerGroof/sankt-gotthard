@@ -25,8 +25,8 @@ export default function RoomLayout({ stop }: Props) {
       <section
         className={
           isSingle
-            ? 'flex flex-1 items-center justify-center px-6 pb-16'
-            : 'flex flex-1 flex-wrap items-center justify-center gap-16 px-6 pb-16 lg:gap-24'
+            ? 'flex flex-1 items-center justify-center px-6 pb-6'
+            : 'flex flex-1 flex-wrap items-center justify-center gap-16 px-6 pb-6 lg:gap-24'
         }
       >
         {stop.pictures.map((p) => (
@@ -38,6 +38,31 @@ export default function RoomLayout({ stop }: Props) {
           />
         ))}
       </section>
+
+      {next && (
+        <div className="flex justify-center pb-8">
+          <Link
+            href={`/exhibition/${next.slug}`}
+            aria-label={`${ui('next')} — ${t(next.nameKey)}`}
+            title={`${ui('next')} — ${t(next.nameKey)}`}
+            className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-gallery-crimson/40 text-gallery-crimson transition-colors hover:border-gallery-crimson hover:bg-gallery-crimson hover:text-gallery-mat"
+          >
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </Link>
+        </div>
+      )}
 
       <nav className="flex items-center justify-between gap-4 border-t border-gallery-ink/10 bg-gallery-bg/70 px-6 py-5 font-body text-base text-gallery-ink backdrop-blur-sm sm:px-12">
         <div className="flex-1">
