@@ -47,3 +47,33 @@
     mask-image: linear-gradient(180deg, transparent 0%, black 35%);
   }
 }
+
+/* Force landscape orientation on small portrait phones for exhibition pages.
+   The OrientationLock client component adds the .force-landscape class to
+   <body> when matchMedia('(max-width: 900px) and (orientation: portrait)')
+   matches. The layout root then gets rotated 90° around the viewport center
+   so the wide gallery layouts always read horizontally. The landing page is
+   never wrapped in OrientationLock, so it stays normal in any orientation. */
+@media (max-width: 900px) and (orientation: portrait) {
+  body.force-landscape {
+    overflow: hidden;
+    height: 100vh;
+    margin: 0;
+  }
+  body.force-landscape .floor-parquet {
+    display: none;
+  }
+  body.force-landscape .layout-root {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vh;
+    height: 100vw;
+    min-height: 100vw !important;
+    margin: 0;
+    transform: translate(-50%, -50%) rotate(90deg);
+    transform-origin: center center;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}

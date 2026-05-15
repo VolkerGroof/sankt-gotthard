@@ -49,7 +49,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={`${display.variable} ${body.variable}`}>
       <body className="font-body antialiased">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <div className="relative z-10 flex min-h-screen flex-col">
+          <div className="layout-root relative z-10 flex min-h-screen flex-col">
             <header className="flex items-center justify-between px-6 py-5 sm:px-10">
               <Link
                 href="/"
