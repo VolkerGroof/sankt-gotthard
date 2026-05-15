@@ -1,78 +1,197 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
-import fs from 'node:fs';
-import path from 'node:path';
 
 type Props = {
   titleKey: string;
   file: string;
+  exists: boolean;
   layout?: 'single' | 'pair';
 };
 
-function fileExists(file: string): boolean {
-  try {
-    return fs.existsSync(path.join(process.cwd(), 'public', 'pictures', file));
-  } catch {
-    return false;
-  }
-}
-
-export default function PictureFrame({ titleKey, file, layout = 'single' }: Props) {
+export default function PictureFrame({
+  titleKey,
+  file,
+  exists,
+  layout = 'single',
+}: Props) {
   const t = useTranslations();
   const ui = useTranslations('ui');
-  const exists = fileExists(file);
   const title = t(titleKey);
+  const [open, setOpen] = useState(false);
+
+  // Lock body scroll while the lightbox is open and close on Escape.
+  useEffect(() => {
+    if (!open) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
   const figureWidth =
     layout === 'pair'
       ? 'w-full max-w-[min(720px,44vw)]'
       : 'w-full max-w-[min(960px,72vw)]';
 
-  const imgMaxH =
-    layout === 'pair' ? 'max-h-[62vh]' : 'max-h-[72vh]';
+  const imgMaxH = layout === 'pair' ? 'max-h-[62vh]' : 'max-h-[72vh]';
 
-  // The `pf-single` / `pf-pair` class names let globals.css override the
-  // width/height caps in force-landscape (mobile portrait, where the layout
-  // is rotated 90°) so pictures fill more of the visible screen.
   const variantClass = layout === 'pair' ? 'pf-pair' : 'pf-single';
 
   return (
-    <figure className={`flex flex-col items-center ${variantClass} ${figureWidth}`}>
-      <div
-        className="relative w-full rounded-[2px] shadow-frame"
-        style={{
-          padding: '14px',
-          background:
-            'linear-gradient(140deg, #d9b56a 0%, #c9a14a 38%, #8c6e2c 100%)',
+    <>
+      <figure
+        className={`group flex cursor-zoom-in flex-col items-center ${variantClass} ${figureWidth}`}
+        onClick={() => setOpen(true)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setOpen(true);
+          }
         }}
+        role="button"
+        tabIndex={0}
+        aria-label={`${title} — ${ui('open')}`}
       >
         <div
-          className={`relative flex w-full items-center justify-center bg-gallery-mat ${
-            layout === 'pair' ? 'aspect-[16/9]' : ''
-          }`}
-          style={{ padding: '24px' }}
+          className="relative w-full rounded-[2px] shadow-frame transition-transform group-hover:scale-[1.01]"
+          style={{
+            padding: '14px',
+            background:
+              'linear-gradient(140deg, #d9b56a 0%, #c9a14a 38%, #8c6e2c 100%)',
+          }}
         >
-          {exists ? (
-            <img
-              src={`/pictures/${file}`}
-              alt={title}
-              className={`block max-h-full max-w-full ${
-                layout === 'pair' ? 'h-full w-full' : imgMaxH
-              } object-contain`}
-              style={{ width: layout === 'pair' ? '100%' : 'auto', height: layout === 'pair' ? '100%' : 'auto' }}
-            />
-          ) : (
-            <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-neutral-300 text-neutral-700">
-              <span className="font-display text-xl italic">
-                {ui('missingImage')}
-              </span>
-              <span className="mt-2 font-body text-sm">{file}</span>
-            </div>
-          )}
+          <div
+            className={`relative flex w-full items-center justify-center bg-gallery-mat ${
+              layout === 'pair' ? 'aspect-[16/9]' : ''
+            }`}
+            style={{ padding: '24px' }}
+          >
+            {exists ? (
+              <img
+                src={`/pictures/${file}`}
+                alt={title}
+                className={`block max-h-full max-w-full ${
+                  layout === 'pair' ? 'h-full w-full' : imgMaxH
+                } object-contain`}
+                style={{
+                  width: layout === 'pair' ? '100%' : 'auto',
+                  height: layout === 'pair' ? '100%' : 'auto',
+                }}
+              />
+            ) : (
+              <div className="flex aspect-[4/3] w-full flex-col items-center justify-center bg-neutral-300 text-neutral-700">
+                <span className="font-display text-xl italic">
+                  {ui('missingImage')}
+                </span>
+                <span className="mt-2 font-body text-sm">{file}</span>
+              </div>
+            )}
+          </div>
         </div>
+        <figcaption className="mt-3 max-w-[28rem] text-center font-display text-lg italic leading-snug text-gallery-ink sm:mt-5 sm:text-2xl">
+          {title}
+        </figcaption>
+      </figure>
+
+      {open &&
+        typeof document !== 'undefined' &&
+        createPortal(
+          <PictureLightbox
+            file={file}
+            title={title}
+            exists={exists}
+            onClose={() => setOpen(false)}
+            closeLabel={ui('close')}
+          />,
+          document.body,
+        )}
+    </>
+  );
+}
+
+function PictureLightbox({
+  file,
+  title,
+  exists,
+  onClose,
+  closeLabel,
+}: {
+  file: string;
+  title: string;
+  exists: boolean;
+  onClose: () => void;
+  closeLabel: string;
+}) {
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={title}
+      onClick={onClose}
+      className="picture-lightbox fixed inset-0 z-[100] flex cursor-zoom-out flex-col items-center justify-center bg-black/80 backdrop-blur-sm"
+    >
+      <div
+        className="relative flex max-h-[88vh] max-w-[90vw] flex-col items-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          className="relative rounded-[2px] shadow-frame"
+          style={{
+            padding: '18px',
+            background:
+              'linear-gradient(140deg, #d9b56a 0%, #c9a14a 38%, #8c6e2c 100%)',
+          }}
+        >
+          <div
+            className="relative flex items-center justify-center bg-gallery-mat"
+            style={{ padding: '28px' }}
+          >
+            {exists ? (
+              <img
+                src={`/pictures/${file}`}
+                alt={title}
+                className="block max-h-[70vh] max-w-[80vw] object-contain"
+              />
+            ) : (
+              <div className="flex aspect-[4/3] w-[60vw] items-center justify-center bg-neutral-300 text-neutral-700">
+                {file}
+              </div>
+            )}
+          </div>
+        </div>
+        <p className="mt-5 max-w-[80vw] text-center font-display text-2xl italic leading-snug text-[#f3e8cf] sm:text-3xl">
+          {title}
+        </p>
       </div>
-      <figcaption className="mt-5 max-w-[28rem] text-center font-display text-xl italic leading-snug text-gallery-ink sm:text-2xl">
-        {title}
-      </figcaption>
-    </figure>
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label={closeLabel}
+        title={closeLabel}
+        className="absolute right-6 top-6 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-white/90 transition-colors hover:bg-white/10"
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          aria-hidden
+        >
+          <path d="M6 6l12 12M6 18L18 6" />
+        </svg>
+      </button>
+    </div>
   );
 }

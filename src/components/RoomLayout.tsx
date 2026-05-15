@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { adjacent, type Stop } from '@/data/exhibition';
@@ -6,6 +8,14 @@ import PictureFrame from './PictureFrame';
 type Props = {
   stop: Stop;
 };
+
+function fileExists(file: string): boolean {
+  try {
+    return fs.existsSync(path.join(process.cwd(), 'public', 'pictures', file));
+  } catch {
+    return false;
+  }
+}
 
 export default function RoomLayout({ stop }: Props) {
   const t = useTranslations();
@@ -22,30 +32,31 @@ export default function RoomLayout({ stop }: Props) {
         <div className="mx-auto mt-2 h-px w-20 bg-gallery-crimson sm:mt-4 sm:w-24" />
       </header>
 
-      <section
-        className={
-          isSingle
-            ? 'flex flex-1 items-center justify-center px-4 pb-1 sm:px-6 sm:pb-3'
-            : 'flex flex-1 flex-wrap items-center justify-center gap-6 px-4 pb-1 sm:gap-16 sm:px-6 sm:pb-3 lg:gap-24'
-        }
-      >
-        {stop.pictures.map((p) => (
-          <PictureFrame
-            key={p.id}
-            titleKey={p.titleKey}
-            file={p.file}
-            layout={isSingle ? 'single' : 'pair'}
-          />
-        ))}
-      </section>
+      <section className="flex flex-1 flex-col items-center justify-center px-4 pb-1 sm:px-6 sm:pb-3">
+        <div
+          className={
+            isSingle
+              ? 'flex w-full items-center justify-center'
+              : 'flex w-full flex-wrap items-center justify-center gap-6 sm:gap-16 lg:gap-24'
+          }
+        >
+          {stop.pictures.map((p) => (
+            <PictureFrame
+              key={p.id}
+              titleKey={p.titleKey}
+              file={p.file}
+              exists={fileExists(p.file)}
+              layout={isSingle ? 'single' : 'pair'}
+            />
+          ))}
+        </div>
 
-      {next && (
-        <div className="flex justify-center pt-1 pb-3 sm:pt-2 sm:pb-5">
+        {next && (
           <Link
             href={`/exhibition/${next.slug}`}
             aria-label={`${ui('next')} — ${t(next.nameKey)}`}
             title={`${ui('next')} — ${t(next.nameKey)}`}
-            className="inline-flex items-center justify-center p-2 text-gallery-crimson transition-colors hover:text-gallery-ink"
+            className="mt-2 inline-flex items-center justify-center p-2 text-gallery-crimson transition-colors hover:text-gallery-ink sm:mt-4"
           >
             <svg
               width="40"
@@ -61,8 +72,8 @@ export default function RoomLayout({ stop }: Props) {
               <path d="M9 6l6 6-6 6" />
             </svg>
           </Link>
-        </div>
-      )}
+        )}
+      </section>
 
       <nav className="flex items-center justify-between gap-4 border-t border-gallery-ink/10 bg-gallery-bg/70 px-6 py-5 font-body text-base text-gallery-ink backdrop-blur-sm sm:px-12">
         <div className="flex-1">

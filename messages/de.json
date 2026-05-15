@@ -15,7 +15,9 @@
     "english": "English",
     "missingImage": "Bilddatei fehlt",
     "nationalGalleryView": "National Gallery View",
-    "rowView": "Reihenansicht"
+    "rowView": "Reihenansicht",
+    "open": "Vergrößern",
+    "close": "Schließen"
   },
   "rooms": {
     "eingang": "Eingang",

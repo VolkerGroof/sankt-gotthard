@@ -15,7 +15,9 @@
     "english": "English",
     "missingImage": "Image file missing",
     "nationalGalleryView": "National Gallery View",
-    "rowView": "Row View"
+    "rowView": "Row View",
+    "open": "Open",
+    "close": "Close"
   },
   "rooms": {
     "eingang": "Entrance",
