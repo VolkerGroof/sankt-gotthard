@@ -30,8 +30,13 @@ export default function PictureFrame({ titleKey, file, layout = 'single' }: Prop
   const imgMaxH =
     layout === 'pair' ? 'max-h-[62vh]' : 'max-h-[72vh]';
 
+  // The `pf-single` / `pf-pair` class names let globals.css override the
+  // width/height caps in force-landscape (mobile portrait, where the layout
+  // is rotated 90°) so pictures fill more of the visible screen.
+  const variantClass = layout === 'pair' ? 'pf-pair' : 'pf-single';
+
   return (
-    <figure className={`flex flex-col items-center ${figureWidth}`}>
+    <figure className={`flex flex-col items-center ${variantClass} ${figureWidth}`}>
       <div
         className="relative w-full rounded-[2px] shadow-frame"
         style={{

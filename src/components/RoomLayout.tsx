@@ -15,18 +15,18 @@ export default function RoomLayout({ stop }: Props) {
 
   return (
     <main className="relative flex min-h-[calc(100vh-4rem)] flex-col">
-      <header className="px-6 pt-12 pb-8 text-center">
-        <h1 className="font-display text-4xl uppercase tracking-[0.25em] text-gallery-ink sm:text-5xl">
+      <header className="room-header px-6 pt-4 pb-2 text-center sm:pt-8 sm:pb-4">
+        <h1 className="font-display text-3xl uppercase tracking-[0.25em] text-gallery-ink sm:text-5xl">
           {t(stop.nameKey)}
         </h1>
-        <div className="mx-auto mt-4 h-px w-24 bg-gallery-crimson" />
+        <div className="mx-auto mt-2 h-px w-20 bg-gallery-crimson sm:mt-4 sm:w-24" />
       </header>
 
       <section
         className={
           isSingle
-            ? 'flex flex-1 items-center justify-center px-6 pb-6'
-            : 'flex flex-1 flex-wrap items-center justify-center gap-16 px-6 pb-6 lg:gap-24'
+            ? 'flex flex-1 items-center justify-center px-4 pb-1 sm:px-6 sm:pb-3'
+            : 'flex flex-1 flex-wrap items-center justify-center gap-6 px-4 pb-1 sm:gap-16 sm:px-6 sm:pb-3 lg:gap-24'
         }
       >
         {stop.pictures.map((p) => (
@@ -40,20 +40,20 @@ export default function RoomLayout({ stop }: Props) {
       </section>
 
       {next && (
-        <div className="flex justify-center pb-8">
+        <div className="flex justify-center pt-1 pb-3 sm:pt-2 sm:pb-5">
           <Link
             href={`/exhibition/${next.slug}`}
             aria-label={`${ui('next')} — ${t(next.nameKey)}`}
             title={`${ui('next')} — ${t(next.nameKey)}`}
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full border border-gallery-crimson/40 text-gallery-crimson transition-colors hover:border-gallery-crimson hover:bg-gallery-crimson hover:text-gallery-mat"
+            className="inline-flex items-center justify-center p-2 text-gallery-crimson transition-colors hover:text-gallery-ink"
           >
             <svg
-              width="22"
-              height="22"
+              width="40"
+              height="40"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden

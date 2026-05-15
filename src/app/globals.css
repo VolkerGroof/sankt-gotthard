@@ -76,4 +76,21 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+  /* In force-landscape, the layout root is rotated 90°, so CSS `vw` actually
+     points at the screen's shorter axis (the visible vertical) and CSS `vh`
+     points at the longer axis (the visible horizontal). Swap the picture
+     caps so pictures fill the visible viewport instead of being constrained
+     by the short axis. */
+  body.force-landscape .pf-single {
+    max-width: 90vh !important;
+  }
+  body.force-landscape .pf-single img {
+    max-height: 88vw !important;
+  }
+  body.force-landscape .pf-pair {
+    max-width: 42vh !important;
+  }
+  body.force-landscape .pf-pair img {
+    max-height: 80vw !important;
+  }
 }
