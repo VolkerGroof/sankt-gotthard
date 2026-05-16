@@ -46,6 +46,8 @@ export default function RoomLayout({ stop }: Props) {
               titleKey={p.titleKey}
               file={p.file}
               exists={fileExists(p.file)}
+              lightboxFile={p.lightboxFile}
+              lightboxExists={p.lightboxFile ? fileExists(p.lightboxFile) : undefined}
               layout={isSingle ? 'single' : 'pair'}
             />
           ))}

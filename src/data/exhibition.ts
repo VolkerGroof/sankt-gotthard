@@ -3,6 +3,8 @@ export type Picture = {
   titleKey: string;
   suplineKey?: string;
   file: string;
+  /** Optional override shown in the fullscreen lightbox instead of `file`. */
+  lightboxFile?: string;
 };
 
 export type Stop = {
@@ -55,7 +57,12 @@ export const stops: Stop[] = [
     slug: 'ausgang',
     nameKey: 'rooms.ausgang',
     pictures: [
-      { id: 'proemial', titleKey: 'pictures.proemial', file: '5 proemial decoder.png' },
+      {
+        id: 'proemial',
+        titleKey: 'pictures.proemial',
+        file: '5 proemial decoder.png',
+        lightboxFile: 'Proemial decoder in groß.png',
+      },
     ],
   },
   {

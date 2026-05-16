@@ -8,6 +8,9 @@ type Props = {
   titleKey: string;
   file: string;
   exists: boolean;
+  /** Optional override shown in the fullscreen lightbox instead of `file`. */
+  lightboxFile?: string;
+  lightboxExists?: boolean;
   layout?: 'single' | 'pair';
 };
 
@@ -15,6 +18,8 @@ export default function PictureFrame({
   titleKey,
   file,
   exists,
+  lightboxFile,
+  lightboxExists,
   layout = 'single',
 }: Props) {
   const t = useTranslations();
@@ -106,9 +111,9 @@ export default function PictureFrame({
         typeof document !== 'undefined' &&
         createPortal(
           <PictureLightbox
-            file={file}
+            file={lightboxFile ?? file}
             title={title}
-            exists={exists}
+            exists={lightboxFile ? !!lightboxExists : exists}
             onClose={() => setOpen(false)}
             closeLabel={ui('close')}
           />,
