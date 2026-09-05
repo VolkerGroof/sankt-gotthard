@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useTranslations } from 'next-intl';
+import AudioGuide from './AudioGuide';
 
 type Props = {
   titleKey: string;
@@ -11,6 +12,8 @@ type Props = {
   /** Optional override shown in the fullscreen lightbox instead of `file`. */
   lightboxFile?: string;
   lightboxExists?: boolean;
+  /** Optional URL to a narration audio file; shows a speaker button on the frame. */
+  audioSrc?: string;
   layout?: 'single' | 'pair';
 };
 
@@ -20,6 +23,7 @@ export default function PictureFrame({
   exists,
   lightboxFile,
   lightboxExists,
+  audioSrc,
   layout = 'single',
 }: Props) {
   const t = useTranslations();
@@ -74,6 +78,11 @@ export default function PictureFrame({
               'linear-gradient(140deg, #d9b56a 0%, #c9a14a 38%, #8c6e2c 100%)',
           }}
         >
+          {audioSrc && (
+            <div className="absolute left-full top-1/2 z-10 -translate-y-1/2 pl-3">
+              <AudioGuide src={audioSrc} />
+            </div>
+          )}
           <div
             className={`relative flex w-full items-center justify-center bg-gallery-mat ${
               layout === 'pair' ? 'aspect-[16/9]' : ''

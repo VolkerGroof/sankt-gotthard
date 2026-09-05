@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import { adjacent, type Stop } from '@/data/exhibition';
 import PictureFrame from './PictureFrame';
@@ -20,6 +20,7 @@ function fileExists(file: string): boolean {
 export default function RoomLayout({ stop }: Props) {
   const t = useTranslations();
   const ui = useTranslations('ui');
+  const locale = useLocale() as 'de' | 'en';
   const { prev, next } = adjacent(stop.slug);
   const isSingle = stop.pictures.length === 1;
 
@@ -40,17 +41,21 @@ export default function RoomLayout({ stop }: Props) {
               : 'pair-row flex w-full flex-nowrap items-center justify-center gap-3 sm:gap-12 lg:gap-20'
           }
         >
-          {stop.pictures.map((p) => (
-            <PictureFrame
-              key={p.id}
-              titleKey={p.titleKey}
-              file={p.file}
-              exists={fileExists(p.file)}
-              lightboxFile={p.lightboxFile}
-              lightboxExists={p.lightboxFile ? fileExists(p.lightboxFile) : undefined}
-              layout={isSingle ? 'single' : 'pair'}
-            />
-          ))}
+          {stop.pictures.map((p) => {
+            const audioFile = p.audio?.[locale];
+            return (
+              <PictureFrame
+                key={p.id}
+                titleKey={p.titleKey}
+                file={p.file}
+                exists={fileExists(p.file)}
+                lightboxFile={p.lightboxFile}
+                lightboxExists={p.lightboxFile ? fileExists(p.lightboxFile) : undefined}
+                audioSrc={audioFile ? `/audio/${audioFile}` : undefined}
+                layout={isSingle ? 'single' : 'pair'}
+              />
+            );
+          })}
         </div>
 
         {next && (

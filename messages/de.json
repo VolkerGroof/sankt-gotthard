@@ -17,7 +17,9 @@
     "nationalGalleryView": "National Gallery View",
     "rowView": "Reihenansicht",
     "open": "Vergrößern",
-    "close": "Schließen"
+    "close": "Schließen",
+    "audioGuidePlay": "Audioguide abspielen",
+    "audioGuidePause": "Audioguide pausieren"
   },
   "rooms": {
     "eingang": "Eingang",

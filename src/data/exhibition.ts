@@ -5,6 +5,8 @@ export type Picture = {
   file: string;
   /** Optional override shown in the fullscreen lightbox instead of `file`. */
   lightboxFile?: string;
+  /** Narration audio per locale. Picture renders a speaker icon only for locales present here. */
+  audio?: { de?: string; en?: string };
 };
 
 export type Stop = {
@@ -18,7 +20,12 @@ export const stops: Stop[] = [
     slug: 'eingang',
     nameKey: 'rooms.eingang',
     pictures: [
-      { id: 'georg', titleKey: 'pictures.georg', file: '0 Georg.png' },
+      {
+        id: 'georg',
+        titleKey: 'pictures.georg',
+        file: '0 Georg.png',
+        audio: { de: 'Eingang.m4a' },
+      },
     ],
   },
   {
